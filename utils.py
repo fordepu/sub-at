@@ -10,7 +10,7 @@ import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torch.utils.data
-from torch.autograd.gradcheck import zero_gradients
+# from torch.autograd.gradcheck import zero_gradients
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
@@ -31,6 +31,11 @@ from advertorch.attacks import LinfPGDAttack, L2PGDAttack
 from advertorch.context import ctx_noparamgrad
 from advertorch.utils import NormalizeByChannelMeanStd
 
+def zero_gradients(x):
+    if x.grad is not None:
+        x.grad.detach_()
+        x.grad.zero_()
+        
 def get_model_param_vec(model):
     """Return model parameters as a vector"""
     vec = []

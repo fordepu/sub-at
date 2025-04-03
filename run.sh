@@ -6,14 +6,7 @@ device=0
 for model in PreActResNet18
 do
     # Fast AT (200 epochs)
-    EXP=$model\_$datasets\_FastAT
-    DST=new_results/$EXP
-    CUDA_VISIBLE_DEVICES=$device python -u train_adv.py --pgd50 \
-        --datasets $datasets --attack Fast-AT  --randomseed $seed \
-        --train_eps $eps --test_eps $eps --train_step 1 --test_step 20 \
-        --train_gamma 10 --test_gamma 2 --arch=$model \
-        --epochs=200  --save-dir=$DST/models --log-dir=$DST --EXP $EXP
-
+    
     # Fast Sub-AT (DLDR: 65 epochs; Sub-AT: 40 epochs)
     # We suggest use weight decay of 5e-4 instead of 1e-4 (our original setting) for better performance. [1]
     EXP=$model\_$datasets\_Fast_SubAT
