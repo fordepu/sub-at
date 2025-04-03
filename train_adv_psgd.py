@@ -267,8 +267,8 @@ def main():
         best_robust = max(robust_acc, best_robust)
     
         if args.wandb:
-            wandb.log({"test natural acc": natural_acc})
-            wandb.log({"test robust acc": robust_acc})
+            wandb.log({"test natural acc": natural_acc}, step=epoch)
+            wandb.log({"test robust acc": robust_acc}, step=epoch)
 
         if epoch + 5 >= args.epochs:
             nat_last5.append(natural_acc)        
@@ -438,8 +438,8 @@ def train(train_loader, model, criterion, optimizer, epoch):
     train_robust_loss.append(losses.avg)
     train_robust_acc.append(top1.avg)
     if args.wandb:
-        wandb.log({"train robust acc": top1.avg})
-        wandb.log({"train robust loss": losses.avg})
+        wandb.log({"train robust acc": top1.avg}, step=epoch)
+        wandb.log({"train robust loss": losses.avg}, step=epoch)
     arr_time.append(batch_time.sum)
 
 
